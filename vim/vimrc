@@ -1,0 +1,51 @@
+" set clipboard copy
+set clipboard=unnamedplus
+" Set Number rows
+set nu
+"Defaults and Maps
+map <C-o> :NERDTreeToggle<CR>
+map <C-Left> :tabprevious<CR>
+map <C-Right> :tabnext<CR>
+map <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+map <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
+map <C-Tab> :bn<CR>
+map <C-S-Tab> :bp<CR>
+" enable Automatic paste and nopaste option in VIM
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+" End of Automatic paste and nopaste`
+
+" Plugin Installtion 
+if empty(glob('~/.vim/autoload/plug.vim'))
+          silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+              \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+            autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+
+" Specify a directory for plugins
+" " - For Neovim: stdpath('data') . '/plugged'
+" " - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+Plug 'airblade/vim-gitgutter'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'mattn/emmet-vim'
+Plug 'scrooloose/nerdtree'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-surround'
+Plug 'w0rp/ale'
+
+" Initialize plugin system
+call plug#end()
