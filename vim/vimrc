@@ -147,6 +147,10 @@ map <C-Tab> :bn<CR>
 map <C-S-Tab> :bp<CR>
 " FZF finder
 map ; :Files<CR>
+" Fuzzy Finder
+nnoremap <silent> <C-p> :Files ~<CR>
+nnoremap <silent> <C-g> :Rg<CR>
+nnoremap <silent> <C-b> :Buffers<CR>
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
@@ -283,3 +287,19 @@ Plug 'junegunn/vim-easy-align'
 
 " Initialize plugin system
 call plug#end()
+
+" Enable fuzy finder
+set rtp+=~/.fzf
+
+" Lightline
+let g:lightline = {
+\ 'colorscheme': 'jellybeans',
+\ 'active': {
+\   'left': [['paste'], ['relativepath', 'modified']],
+\   'right': [['lineinfo'], ['percent']]
+\ },
+\ 'inactive': {
+\   'left': [['relativepath', 'modified']],
+\   'right': [['lineinfo'], ['percent']]
+\ },
+\ }
