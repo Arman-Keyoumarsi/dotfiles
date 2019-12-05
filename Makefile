@@ -19,3 +19,6 @@ git:
 	ln -fs $(DOTFILES)/git/gitconfig ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/git/gitcommit ${HOME}/.gitcommit
 	ln -fs $(DOTFILES)/git/gitignore ${HOME}/.gitignore
+tmux:
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true
+	ln -fs $(DOTFILES)/tmux/tmux.conf ${HOME}/.tmux.conf
