@@ -286,7 +286,9 @@ Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'junegunn/vim-easy-align'
+Plug 'https://github.com/PProvost/vim-ps1.git'
 
+"Reload .vimrc and :PlugInstall to install plugins.
 " Initialize plugin system
 call plug#end()
 
