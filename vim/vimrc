@@ -128,7 +128,9 @@ vnoremap <silent> # :call VisualSelection('b', '')<CR>
 """"""""""""""""""""""""""""""""""""""""""""
 "Defaults and Maps
 """""""""""""""""""""""""""""""""""""""""""
-" Smart way to move between windows
+" map ii to Esc iii
+:inoremap ii <Esc> 
+"Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
 map <C-h> <C-W>h
