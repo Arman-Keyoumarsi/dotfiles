@@ -1,4 +1,4 @@
-.PHONY: bash tmux vim git qute
+.PHONY: bash tmux vim git qute apps
 all: .PHONY
 
 DOTFILES := $(shell pwd)
