@@ -1,6 +1,5 @@
 .PHONY: bash tmux vim git qute apps
 all: .PHONY
-
 DOTFILES := $(shell pwd)
 
 bash:
@@ -24,3 +23,13 @@ tmux:
 	ln -fs $(DOTFILES)/tmux/tmux.conf ${HOME}/.tmux.conf
 apps:
 	ln -fs ${DOTFILES}/apps/terraform/terraform /usr/bin/terraform
+	#Install FZF
+	#git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+	#~/.fzf/install
+	# Install Azure CLI
+	curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+	# Install Google Cloud CLI
+	echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
+	sudo apt-get install apt-transport-https ca-certificates gnupg
+	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
+	sudo apt-get update && sudo apt-get install google-cloud-sdk

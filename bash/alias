@@ -73,6 +73,7 @@ alias gd='git diff'
 alias gb='git branch'
 alias gds='GIT_PAGER=cat git diff --stat'
 alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
+alias gsall='find . -maxdepth 1 -mindepth 1 -type d -exec sh -c '(echo {} && cd {} && git status -s && echo)' \; '
 
 # ruby
 alias b='bundle-hack'
