@@ -55,3 +55,4 @@
    dmb = !sh -c 'git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d' -
 [core]
 	excludesfile = ~/.gitignore
+    editor       = "vim"
