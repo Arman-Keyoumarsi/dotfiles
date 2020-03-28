@@ -276,7 +276,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/lightline.vim'
-Plug 'junegunn/fzf'
+"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'mattn/emmet-vim'
 Plug 'scrooloose/nerdtree'
@@ -289,7 +290,8 @@ Plug 'vim-syntastic/syntastic'
 Plug 'juliosueiras/vim-terraform-completion'
 Plug 'junegunn/vim-easy-align'
 Plug 'https://github.com/PProvost/vim-ps1.git'
-
+"Plug 'valloric/YouCompleteMe'
+Plug '~/.vim/plugged/YouCompleteMe'
 "Reload .vimrc and :PlugInstall to install plugins.
 " Initialize plugin system
 call plug#end()

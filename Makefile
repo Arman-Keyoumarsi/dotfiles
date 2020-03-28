@@ -14,6 +14,9 @@ vim:
 	mkdir -p ${HOME}/.vim/undodir
 	cp -r $(DOTFILES)/vim/colors ${HOME}/.vim/
 	ln -fs $(DOTFILES)/vim/vimrc ${HOME}/.vimrc
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf || true
+	#~/.fzf/install --all
+	git clone https://github.com/ycm-core/YouCompleteMe.git ~/.vim/plugged/YouCompleteMe || true 
 git:
 	ln -fs $(DOTFILES)/git/gitconfig ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/git/gitcommit ${HOME}/.gitcommit
