@@ -25,5 +25,5 @@ tmux:
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true
 	ln -fs $(DOTFILES)/tmux/tmux.conf ${HOME}/.tmux.conf
 apps:
-	ln -fs ${DOTFILES}/apps/terraform/terraform /usr/bin/terraform
+	sudo ln -fs ${DOTFILES}/apps/terraform/terraform /usr/bin/terraform
 	
