@@ -52,6 +52,7 @@ set expandtab
 " Be smart when using tabs ;)
 set smarttab
 
+
 " 1 tab == 4 spaces
 set shiftwidth=4
 set tabstop=4
@@ -79,7 +80,10 @@ set nocompatible
 let python_highlight_all=1
 
 " Enable code folding
-" set foldmethod=syntax
+set foldmethod=syntax
+
+" Dont show the buttom line for insert and visual mode anymore
+set noshowmode
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -154,17 +158,25 @@ map ; :Files<CR>
 " Fuzzy Finder
 nnoremap <silent> <C-p> :Files ~<CR>
 nnoremap <silent> <C-g> :Rg<CR>
-nnoremap <silent> <C-b> :Buffers<CR>
+"Conflicting with tmux
+"nnoremap <silent> <C-b> :Buffers<CR>
 let g:fzf_action = {
   \ 'ctrl-i': 'tab split',
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
+" Mapping for GitGutter Plugin
+nnoremap <leader>df :GitGutterFold<cr>
+" Mapping for git fugitive
+nnoremap <leader>gs :Git status<cr>
+nnoremap <leader>dfg :Git diff<cr>
+"Page navigation conflict with tmux
+map <C-b> <C-u>
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
 " Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
+"map <space> /
+"map <c-space> ?
 
 " Disable highlight when <leader><cr> is pressed
 map <silent> <leader><cr> :noh<cr>
@@ -278,21 +290,22 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 call plug#begin('~/.vim/plugged')
 
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/lightline.vim'
 "Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf' ", { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'mattn/emmet-vim'
+"Plug 'mattn/emmet-vim' "Not sure if it usefull for me 
 Plug 'scrooloose/nerdtree'
-Plug 'terryma/vim-multiple-cursors'
+"Plug 'terryma/vim-multiple-cursors' "Not sure if it usefull for me
 Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-surround'
-Plug 'w0rp/ale'
+"Plug 'tpope/vim-surround' "Not sure if it usefull for me 
+"Plug 'w0rp/ale' "conflicting with syntastic
 Plug 'hashivim/vim-terraform'
 Plug 'vim-syntastic/syntastic'
-"Plug 'juliosueiras/vim-terraform-completion'
-Plug 'junegunn/vim-easy-align'
+"Plug 'juliosueiras/vim-terraform-completion' "Makes vim slow
+"Plug 'junegunn/vim-easy-align' "Not sure if it usefull for me 
 Plug 'https://github.com/PProvost/vim-ps1.git'
 "Plug 'valloric/YouCompleteMe'
 Plug '~/.vim/plugged/YouCompleteMe'
@@ -300,21 +313,20 @@ Plug '~/.vim/plugged/YouCompleteMe'
 " Initialize plugin system
 call plug#end()
 
-" Enable fuzy finder
-set rtp+=~/.fzf
+" Enable fuzy finder - Not sure
+"set rtp+=~/.fzf
 
 " Lightline
 let g:lightline = {
-\ 'colorscheme': 'jellybeans',
-\ 'active': {
-\   'left': [['paste'], ['relativepath', 'modified']],
-\   'right': [['lineinfo'], ['percent']]
-\ },
-\ 'inactive': {
-\   'left': [['relativepath', 'modified']],
-\   'right': [['lineinfo'], ['percent']]
-\ },
-\ }
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
 " Syntastic Config
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -332,6 +344,8 @@ set completeopt-=preview
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
+"To ensure that this plugin works well with Tim Pope's fugitive, use the following patterns array:
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 " (Optional) Enable terraform plan to be include in filter
 let g:syntastic_terraform_tffilter_plan = 1
 

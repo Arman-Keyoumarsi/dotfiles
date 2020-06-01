@@ -1,6 +1,9 @@
-.PHONY: bash tmux vim git qute #apps
+.PHONY: esse bash tmux vim git qute #apps
 all: .PHONY
 DOTFILES := $(shell pwd)
+
+esse:
+	sudo apt install -y build-essential cmake vim python3-dev ripgrep curl wget
 
 bash:
 	ln -fs ${DOTFILES}/bash/alias ${HOME}/.alias
