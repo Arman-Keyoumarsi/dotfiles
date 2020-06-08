@@ -3,7 +3,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Turn on the WiLd menu
 "set wildmenu
-
+"Enable Mouse support #EPE
+"set mouse=a 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 
@@ -32,8 +33,6 @@ set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
-" set clipboard copy
-set clipboard=unnamedplus
 " Always show status bar
 set laststatus=2
 " Set Number rows
@@ -43,6 +42,28 @@ set history=10000
 
 " Set to auto read when a file is changed from the outside
 set autoread
+" For GitGutter and Coc plugin 
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -127,12 +148,14 @@ set undodir^=~/.vim/undo//
 """"""""""""""""""""""""""""""
 " Visual mode pressing * or # searches for the current selection
 " Super useful! From an idea by Michael Naumann
-vnoremap <silent> * :call VisualSelection('f', '')<CR>
-vnoremap <silent> # :call VisualSelection('b', '')<CR>
+"vnoremap <silent> * :call VisualSelection('f', '')<CR>
+"vnoremap <silent> # :call VisualSelection('b', '')<CR>
 """"""""""""""""""""""""""""""""""""""""""""
 "Defaults and Maps
 """""""""""""""""""""""""""""""""""""""""""
-" map ii to Esc iii
+" change leader 
+let mapleader=" "
+"map ii to Esc iii
 :inoremap ii <Esc> 
 "Smart way to move between windows
 map <C-j> <C-W>j
@@ -171,6 +194,13 @@ nnoremap <leader>gs :Git status<cr>
 nnoremap <leader>dfg :Git diff<cr>
 "Page navigation conflict with tmux
 map <C-b> <C-u>
+"COC Shortcuts 
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
 " Treat long lines as break lines (useful when moving around in them)
 map j gj
 map k gk
@@ -193,7 +223,6 @@ map <leader>cd :cd %:p:h<cr>:pwd<cr>
 "   set stal=2
 " catch
 " endtry
-
 " Return to last edit position when opening files (You want this!)
 autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
@@ -220,6 +249,9 @@ autocmd BufWrite *.go :call DeleteTrailingWS()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set spelllang=en
+set spellfile=${HOME}/.vim/dic-en.utf-8.add
+
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
 
@@ -227,7 +259,7 @@ map <leader>ss :setlocal spell!<cr>
 map <leader>sn ]s
 map <leader>sp [s
 map <leader>sa zg
-map <leader>s? z=
+map <leader>sc z=
 map <leader>r :%s/
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -277,7 +309,7 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Plugin Installtion 
+" Plugin Installation 
 if empty(glob('~/.vim/autoload/plug.vim'))
           silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
               \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -288,17 +320,18 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 " " - For Neovim: stdpath('data') . '/plugged'
 " " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
-
+" Plugin for showing git diff
 Plug 'airblade/vim-gitgutter'
+" Plugin for Git integration
 Plug 'tpope/vim-fugitive'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/lightline.vim'
-"Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+"Auto Complete Plugin
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf' ", { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 "Plug 'mattn/emmet-vim' "Not sure if it usefull for me 
 Plug 'scrooloose/nerdtree'
-"Plug 'terryma/vim-multiple-cursors' "Not sure if it usefull for me
 Plug 'tpope/vim-eunuch'
 "Plug 'tpope/vim-surround' "Not sure if it usefull for me 
 "Plug 'w0rp/ale' "conflicting with syntastic
@@ -307,14 +340,41 @@ Plug 'vim-syntastic/syntastic'
 "Plug 'juliosueiras/vim-terraform-completion' "Makes vim slow
 "Plug 'junegunn/vim-easy-align' "Not sure if it usefull for me 
 Plug 'https://github.com/PProvost/vim-ps1.git'
-"Plug 'valloric/YouCompleteMe'
-Plug '~/.vim/plugged/YouCompleteMe'
+"Plug '~/.vim/plugged/YouCompleteMe'
 "Reload .vimrc and :PlugInstall to install plugins.
 " Initialize plugin system
 call plug#end()
 
 " Enable fuzy finder - Not sure
 "set rtp+=~/.fzf
+
+"Coc Config
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
 
 " Lightline
 let g:lightline = {

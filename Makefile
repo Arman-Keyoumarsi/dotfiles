@@ -1,9 +1,6 @@
-.PHONY: esse bash tmux vim git qute #apps
+.PHONY: bash tmux vim git qute #apps
 all: .PHONY
 DOTFILES := $(shell pwd)
-
-esse:
-	sudo apt install -y build-essential cmake vim python3-dev ripgrep curl wget
 
 bash:
 	ln -fs ${DOTFILES}/bash/alias ${HOME}/.alias
@@ -17,9 +14,10 @@ vim:
 	mkdir -p ${HOME}/.vim/undodir
 	cp -r $(DOTFILES)/vim/colors ${HOME}/.vim/
 	ln -fs $(DOTFILES)/vim/vimrc ${HOME}/.vimrc
+	ln -fs $(DOTFILES)/vim/dic-en.utf-8.add ${HOME}/.vim/dic-en.utf-8.add
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf || true
 	~/.fzf/install --all
-	git clone --depth 1 https://github.com/ycm-core/YouCompleteMe.git ~/.vim/plugged/YouCompleteMe || true 
+	#git clone --depth 1 https://github.com/ycm-core/YouCompleteMe.git ~/.vim/plugged/YouCompleteMe || true 
 git:
 	ln -fs $(DOTFILES)/git/gitconfig ${HOME}/.gitconfig
 	ln -fs $(DOTFILES)/git/gitcommit ${HOME}/.gitcommit

@@ -5,7 +5,7 @@ Familiar Dev Environment in any Linux server
 ## Prerequisite :traffic_light:
 
 ```bash
-sudo apt install build-essential
+bash XXX-bootstrap.sh
 ```
 
 ## Install :beginner:
@@ -16,7 +16,16 @@ sudo apt install build-essential
 make all
 ```
 
-## Install YCM Manually
+## VIM Plugin Installs
+
+Open vim and run following (Install any Coc extetion you like)
+
+```bash
+:PlugInstall
+:CocInstall coc-powershell coc-python coc-svg coc-yaml coc-xml coc-json
+```
+
+## Install YCM Manually (No Longer in Use)
 ```bash
 apt install build-essential cmake vim python3-dev
 
