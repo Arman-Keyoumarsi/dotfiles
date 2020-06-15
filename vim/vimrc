@@ -101,7 +101,7 @@ set nocompatible
 let python_highlight_all=1
 
 " Enable code folding
-set foldmethod=syntax
+set foldmethod=manual
 
 " Dont show the buttom line for insert and visual mode anymore
 set noshowmode
