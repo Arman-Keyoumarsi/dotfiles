@@ -36,11 +36,6 @@ sudo apt install -y awscli
 #Install Kubctl
 sudo apt install -y kubectl
 
-# Installing Docker on an Ubuntu machine
-curl -fsSL https://get.docker.com -o get-docker.sh
-sh get-docker.sh
-sudo usermod -aG docker ${USER}
-sudo apt install -y docker-compose
 
 # Download the Microsoft repository GPG keys
 wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
@@ -52,3 +47,10 @@ sudo apt-get update
 sudo add-apt-repository universe
 # Install PowerShell
 sudo apt-get install -y powershell
+
+# This Should be last
+# Installing Docker on an Ubuntu machine
+curl -fsSL https://get.docker.com -o get-docker.sh
+sh get-docker.sh
+sudo usermod -aG docker ${USER}
+sudo apt install -y docker-compose
