@@ -16,17 +16,17 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install --all --no-update-rc
 
 #Ansible
-sudo apt install software-properties-common
+sudo apt install -y software-properties-common
 sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
 
 #Install Terraform and Packer
-sudo wget https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -P /opt/
-sudo unzip /opt/terraform*.zip -d /opt/
+sudo wget -nc https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -P /opt/
+sudo unzip -o /opt/terraform*.zip -d /opt/
 sudo ln -fs /opt/terraform /usr/bin/terraform
 
-sudo wget https://releases.hashicorp.com/packer/1.6.0/packer_1.6.0_linux_amd64.zip -P /opt/
-sudo unzip /opt/packer*.zip -d /opt/
+sudo wget -nc https://releases.hashicorp.com/packer/1.6.0/packer_1.6.0_linux_amd64.zip -P /opt/
+sudo unzip -o /opt/packer*.zip -d /opt/
 sudo ln -fs /opt/packer /usr/bin/packer
 
 #Install Azure CLI
@@ -40,7 +40,7 @@ sudo apt install -y kubectl
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
 sudo usermod -aG docker ${USER}
-sudo apt install docker-compose
+sudo apt install -y docker-compose
 
 # Download the Microsoft repository GPG keys
 wget -q https://packages.microsoft.com/config/ubuntu/18.04/packages-microsoft-prod.deb
