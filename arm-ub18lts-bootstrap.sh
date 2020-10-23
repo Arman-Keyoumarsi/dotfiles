@@ -30,17 +30,13 @@ sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
 
 #Install Terraform and Packer
-sudo wget -O "/opt/terraform_latest_linux_amd64.zip" https://releases.hashicorp.com/terraform/0.13.4/terraform_0.13.4_linux_amd64.zip
+sudo wget -nc https://releases.hashicorp.com/terraform/0.13.3/terraform_0.13.3_linux_arm.zip -P /opt/
 sudo unzip -o /opt/terraform*.zip -d /opt/
 sudo ln -fs /opt/terraform /usr/bin/terraform
 
-sudo wget -O "/opt/packer_latest_linux_amd64.zip" https://releases.hashicorp.com/packer/1.6.3/packer_1.6.3_linux_amd64.zip
+sudo wget -nc https://releases.hashicorp.com/packer/1.6.3/packer_1.6.3_linux_arm64.zip -P /opt/
 sudo unzip -o /opt/packer*.zip -d /opt/
 sudo ln -fs /opt/packer /usr/bin/packer
-
-sudo wget -O "/opt/sentinel_latest_linux_amd64.zip" https://releases.hashicorp.com/sentinel/0.15.6/sentinel_0.15.6_linux_amd64.zip
-sudo unzip -o /opt/sentinel*.zip -d /opt/
-sudo ln -fs /opt/sentinel /usr/bin/sentinel
 
 #Install Azure CLI
 curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
