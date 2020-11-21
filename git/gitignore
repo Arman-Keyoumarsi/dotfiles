@@ -7,7 +7,7 @@
 *.tfstate.*
 
 # .tfvars files
-*.tfvars
+#*.tfvars
 
 #Sensetive Info
 *private*
