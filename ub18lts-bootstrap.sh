@@ -2,6 +2,7 @@
 
 #Removing tiny vim
 sudo apt remove --assume-yes vim-tiny
+sudo add-apt-repository ppa:jonathonf/vim
 sudo apt-get update
 
 # Installing essentialse
