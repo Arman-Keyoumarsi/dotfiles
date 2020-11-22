@@ -14,6 +14,8 @@ Sessionx.vim
 # Temporary
 .netrwhist
 *~
+https://github.com/Arman-Keyoumarsi/dotfiles.git
+get-docker.sh
 # Auto-generated tag files
 tags
 # Persistent undo
