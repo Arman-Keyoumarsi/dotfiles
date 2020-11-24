@@ -31,11 +31,11 @@ sudo apt-add-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
 
 #Install Terraform and Packer
-sudo wget -O "/opt/terraform_latest_linux_amd64.zip" https://releases.hashicorp.com/terraform/0.13.4/terraform_0.13.4_linux_amd64.zip
+sudo wget -O "/opt/terraform_latest_linux_amd64.zip" https://releases.hashicorp.com/terraform/0.13.5/terraform_0.13.5_linux_amd64.zip
 sudo unzip -o /opt/terraform*.zip -d /opt/
 sudo ln -fs /opt/terraform /usr/bin/terraform
 
-sudo wget -O "/opt/packer_latest_linux_amd64.zip" https://releases.hashicorp.com/packer/1.6.3/packer_1.6.3_linux_amd64.zip
+sudo wget -O "/opt/packer_latest_linux_amd64.zip" https://releases.hashicorp.com/packer/1.6.5/packer_1.6.5_linux_amd64.zip
 sudo unzip -o /opt/packer*.zip -d /opt/
 sudo ln -fs /opt/packer /usr/bin/packer
 
