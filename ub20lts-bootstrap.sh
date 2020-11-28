@@ -66,9 +66,12 @@ sudo add-apt-repository universe
 sudo apt-get install -y powershell
 
 # This Should be last
-# Installing Docker on an Ubuntu machine
-curl -fsSL https://get.docker.com -o get-docker.sh
-sh get-docker.sh
+# Installing Docker on an Ubuntu/mint machine
+echo "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable" | sudo tee /etc/apt/sources.list.d/docker.list
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io pigz
+
 sudo usermod -aG docker ${USER}
 sudo apt install -y docker-compose
 # for WSL use sudo service docker start
