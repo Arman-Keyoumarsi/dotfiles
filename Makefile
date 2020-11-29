@@ -3,7 +3,7 @@ all: .PHONY
 DOTFILES := $(shell pwd)
 
 bash:
-	#ln -fs ${DOTFILES}/bash/alias ${HOME}/.alias
+	ln -fs ${DOTFILES}/bash/alias ${HOME}/.alias
 	ln -fs ${DOTFILES}/bash/alias ${HOME}/.bash_aliases
 	ln -fns $(DOTFILES)/etc/ ${HOME}/etc
 	ln -fs $(DOTFILES)/bash/bashrc ${HOME}/.bashrc

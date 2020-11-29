@@ -6,6 +6,7 @@ sudo add-apt-repository -y ppa:jonathonf/vim
 sudo apt-get update
 
 # Installing essentialse
+sudo apt-get install -y keychain
 sudo apt-get install -y build-essential
 sudo apt-get install -y vim 
 sudo apt-get install -y curl 
