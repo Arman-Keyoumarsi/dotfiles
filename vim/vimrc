@@ -32,9 +32,8 @@ set mat=2
 set clipboard=unnamedplus
 
 " No annoying sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
 set tm=500
 " Always show status bar
 set laststatus=2
