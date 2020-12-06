@@ -4,7 +4,7 @@
 " Turn on the WiLd menu
 "set wildmenu
 "Enable Mouse support #EPE
-set mouse=a 
+"set mouse=a 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 
