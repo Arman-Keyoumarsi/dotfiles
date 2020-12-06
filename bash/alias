@@ -68,6 +68,8 @@ alias path='echo -e ${PATH//:/\\n}'         # path:         Echo all executable 
 # git
 alias g="git"
 alias gs='git status'
+alias gc='git add . && git commit -a'
+alias gu='git add . && git commit -m "update"'
 alias gl='git log'
 alias gd='git diff'
 alias gb='git branch'
