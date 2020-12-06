@@ -9,6 +9,9 @@ bash:
 	ln -fs $(DOTFILES)/bash/bashrc ${HOME}/.bashrc
 	ln -fs $(DOTFILES)/bash/bash_profile ${HOME}/.bash_profile
 vim:
+	sudo wget -O "/opt/terraform-ls_amd64.zip" https://releases.hashicorp.com/terraform-ls/0.10.0/terraform-ls_0.10.0_linux_amd64.zip 
+	sudo unzip -o /opt/terraform-ls_amd64.zip -d /opt/
+	sudo ln -fs /opt/terraform-ls /usr/bin/terraform-ls
 	mkdir -p ${HOME}/.vim/pack/plugins/start/
 	mkdir -p ${HOME}/.vim/swap
 	mkdir -p ${HOME}/.vim/backup
