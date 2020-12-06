@@ -4,7 +4,7 @@
 " Turn on the WiLd menu
 "set wildmenu
 "Enable Mouse support #EPE
-"set mouse=a 
+set mouse=a 
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 
@@ -191,12 +191,12 @@ let g:fzf_action = {
   \ 'ctrl-x': 'split',
   \ 'ctrl-v': 'vsplit' }
 " Mapping for GitGutter Plugin
-nnoremap <leader>df :GitGutterFold<cr>
+nnoremap <leader>cf :GitGutterFold<cr>
 " Mapping for git fugitive
 nnoremap <leader>gs :Git status<cr>
-nnoremap <leader>dfg :Git diff<cr>
+nnoremap <leader>df :Git diff<cr>
 "Page navigation conflict with tmux
-map <C-b> <C-u>
+"map <C-b> <C-u>
 "COC Shortcuts 
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
@@ -427,3 +427,6 @@ let g:terraform_fmt_on_save=1
 
 " Allow vim-terraform to align settings automatically with Tabularize.
 let g:terraform_align=1
+
+" Install coc extention you want coc-python coc-svg coc-yaml coc-xml coc-json
+let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-svg', 'coc-yaml', 'coc-xml', 'coc-cmake', 'coc-sql']

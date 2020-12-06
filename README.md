@@ -5,7 +5,8 @@ Familiar Dev Environment in any Linux server
 ## Prerequisite :traffic_light:
 
 ```bash
-bash XXX-bootstrap.sh
+sudo apt install build-essential
+make ub20
 ```
 
 ## Install :beginner:
