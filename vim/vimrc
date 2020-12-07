@@ -428,4 +428,4 @@ let g:terraform_fmt_on_save=1
 let g:terraform_align=1
 
 " Install coc extention you want coc-python coc-svg coc-yaml coc-xml coc-json
-let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-svg', 'coc-yaml', 'coc-xml', 'coc-cmake', 'coc-sql']
+let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-svg', 'coc-yaml', 'coc-xml', 'coc-cmake', 'coc-sql', 'coc-sh']
