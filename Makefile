@@ -1,4 +1,4 @@
-.PHONY: bash tmux vim git
+.PHONY: bash vim git
 all: .PHONY
 DOTFILES := $(shell pwd)
 OS = $(shell lsb_release -si)
@@ -59,4 +59,5 @@ tfls:
 brew:
 ifeq ($(shell uname -s),Darwin)
 	brew install fzf fd ripgrep
+	brew install hashicorp/tap/terraform-ls
 endif

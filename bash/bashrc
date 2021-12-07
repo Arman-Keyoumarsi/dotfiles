@@ -19,8 +19,8 @@ shopt -s histappend
 #eval $(ssh-agent -s)
 ### START-Keychain ###
 # Let  re-use ssh-agent and/or gpg-agent between logins
-/usr/bin/keychain -q  #$HOME/.ssh/id_dsa
-source $HOME/.keychain/$HOSTNAME-sh
+#/usr/bin/keychain -q  #$HOME/.ssh/id_dsa
+#source $HOME/.keychain/$HOSTNAME-sh
 ### End-Keychain ###
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=1000000
