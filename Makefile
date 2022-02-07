@@ -19,8 +19,6 @@ vim:
 	cp -r $(DOTFILES)/vim/colors ${HOME}/.vim/
 	ln -fs $(DOTFILES)/vim/vimrc ${HOME}/.vimrc
 	ln -fs $(DOTFILES)/vim/dic-en.utf-8.add ${HOME}/.vim/dic-en.utf-8.add
-	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf || true
-	~/.fzf/install --all
 	ln -fs $(DOTFILES)/vim/coc-setting.json ${HOME}/.vim/coc-settings.json
 git:
 	ln -fs $(DOTFILES)/git/gitconfig ${HOME}/.gitconfig
@@ -29,8 +27,10 @@ git:
 tmux:
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true
 	ln -fs $(DOTFILES)/tmux/tmux.conf ${HOME}/.tmux.conf	
-ub20:
+linux:
 	#Removing tiny vim && Installing essentials
+	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf || true
+	~/.fzf/install --all
 	sudo apt remove --assume-yes vim-tiny
 	sudo add-apt-repository -y ppa:jonathonf/vim
 	sudo apt-get update
