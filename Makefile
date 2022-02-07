@@ -28,6 +28,7 @@ tmux:
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm || true
 	ln -fs $(DOTFILES)/tmux/tmux.conf ${HOME}/.tmux.conf	
 linux:
+ifeq ($(shell uname -s),Linux)
 	#Removing tiny vim && Installing essentials
 	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf || true
 	~/.fzf/install --all
@@ -39,6 +40,7 @@ linux:
 	#NodeJs for COC plugin in VIM
 	curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
 	sudo apt-get install -y nodejs
+endif
 tflinx:	
 	#Install Terraform and Packer
 	sudo wget -O "/opt/terraform_latest_linux_amd64.zip" https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
