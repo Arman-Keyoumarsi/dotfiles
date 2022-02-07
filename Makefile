@@ -60,4 +60,6 @@ brew:
 ifeq ($(shell uname -s),Darwin)
 	brew install fzf fd ripgrep
 	brew install hashicorp/tap/terraform-ls
+	brew install bash-completion
+	echo "[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion" >> ~/.bash_profile
 endif
