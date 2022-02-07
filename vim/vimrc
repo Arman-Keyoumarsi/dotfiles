@@ -95,7 +95,8 @@ set wrap "Wrap lines
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark
 colorscheme hybrid
-
+" to make vim color work in Docker container
+set term=xterm-256color
 " Enable syntax highlighting
 syntax enable
 filetype plugin indent on
