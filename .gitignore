@@ -22,5 +22,5 @@ tags
 [._]*.un~
 *.un~
 
-#Mac generated files
+#Mac Specific
 .DS_Store
