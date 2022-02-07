@@ -21,3 +21,6 @@ tags
 # Persistent undo
 [._]*.un~
 *.un~
+
+#Mac Specific
+.DS_Store
