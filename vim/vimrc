@@ -29,7 +29,7 @@ set showmatch
 set mat=2
 
 " For Clipboard Copy
-set clipboard=unnamedplus
+set clipboard=unnamed
 
 " No annoying sound on errors
 set noerrorbells visualbell t_vb=

@@ -1,4 +1,4 @@
-.PHONY: bash tmux vim git
+.PHONY: bash vim git
 all: .PHONY
 DOTFILES := $(shell pwd)
 OS = $(shell lsb_release -si)
@@ -56,3 +56,10 @@ tfls:
 	# Add the official HashiCorp Linux repository
 	sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
 	sudo apt-get update && sudo apt-get install terraform-ls
+brew:
+ifeq ($(shell uname -s),Darwin)
+	brew install fzf fd ripgrep
+	brew install hashicorp/tap/terraform-ls
+	brew install bash-completion
+	echo "[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion" >> ~/.bash_profile
+endif
