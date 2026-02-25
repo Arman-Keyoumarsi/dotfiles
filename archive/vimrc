@@ -1,0 +1,433 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => VIM user interface
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Turn on the WiLd menu
+"set wildmenu
+"Enable Mouse support #EPE
+"set mouse=a 
+" Ignore compiled files
+set wildignore=*.o,*~,*.pyc
+
+" Ignore case when searching
+set ignorecase
+
+" When searching try to be smart about cases 
+set smartcase
+
+" Highlight search results
+set hlsearch
+
+" Makes search act like search in modern browsers
+set incsearch 
+
+" Don't redraw while executing macros (good performance config)
+set lazyredraw 
+
+" Show matching brackets when text indicator is over them
+set showmatch 
+" How many tenths of a second to blink when matching brackets
+set mat=2
+
+" For Clipboard Copy
+set clipboard=unnamed
+
+" No annoying sound on errors
+set noerrorbells visualbell t_vb=
+autocmd GUIEnter * set visualbell t_vb=
+set tm=500
+" Always show status bar
+set laststatus=2
+" Set Number rows
+set nu
+" Sets how many lines of history VIM has to remember
+set history=10000
+
+" Set to auto read when a file is changed from the outside
+set autoread
+" For GitGutter and Coc plugin 
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Text, tab and indent related
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Use spaces instead of tabs
+set expandtab
+
+" Be smart when using tabs ;)
+set smarttab
+
+
+" 1 tab == 4 spaces
+set shiftwidth=4
+set tabstop=4
+set textwidth=79
+set softtabstop=4
+
+" Linebreak on 500 characters
+set lbr
+set tw=500
+
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Fonts
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set background=dark
+colorscheme hybrid
+" to make vim color work in Docker container
+set term=xterm-256color
+" Enable syntax highlighting
+syntax enable
+filetype plugin indent on
+set nocompatible
+let python_highlight_all=1
+
+" Enable code folding
+set foldmethod=manual
+
+" Dont show the buttom line for insert and visual mode anymore
+set noshowmode
+
+" Set extra options when running in GUI mode
+if has("gui_running")
+    set guioptions-=T
+    set guioptions-=e
+    set t_Co=256
+    set guitablabel=%M\ %t
+endif
+
+" Set utf8 as standard encoding and en_US as the standard language
+set encoding=utf8
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Files, backups and undo
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Protect changes between writes. Default values of
+" updatecount (200 keystrokes) and updatetime
+" (4 seconds) are fine
+set swapfile
+set directory^=~/.vim/swap//
+
+" protect against crash-during-write
+set writebackup
+" but do not persist backup after successful write
+set nobackup
+" use rename-and-write-new method whenever safe
+set backupcopy=auto
+" patch required to honor double slash at end
+if has("patch-8.1.0251")
+	" consolidate the writebackups -- not a big
+	" deal either way, since they usually get deleted
+	set backupdir^=~/.vim/backup//
+end
+
+" persist the undo tree for each file
+set undofile
+set undodir^=~/.vim/undo//
+
+""""""""""""""""""""""""""""""
+" => Visual mode related
+""""""""""""""""""""""""""""""
+" Visual mode pressing * or # searches for the current selection
+" Super useful! From an idea by Michael Naumann
+"vnoremap <silent> * :call VisualSelection('f', '')<CR>
+"vnoremap <silent> # :call VisualSelection('b', '')<CR>
+""""""""""""""""""""""""""""""""""""""""""""
+"Defaults and Maps
+"""""""""""""""""""""""""""""""""""""""""""
+" change leader 
+let mapleader=" "
+"map ii to Esc iii
+:inoremap ii <Esc> 
+"Smart way to move between windows
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+"NerdTree
+map <C-o> :NERDTreeToggle<CR>
+" Useful mappings for managing tabs
+map <leader>tn :tabnew<cr>
+map <leader>to :tabonly<cr>
+map <leader>tc :tabclose<cr>
+map <leader>tm :tabmove
+map <C-Left> :tabprevious<CR>
+map <C-Right> :tabnext<CR>
+map <silent> <A-Left> :execute 'silent! tabmove ' . (tabpagenr()-2)<CR>
+map <silent> <A-Right> :execute 'silent! tabmove ' . (tabpagenr()+1)<CR>
+"Buffer navigation
+map <C-S-Right> :bn<CR>
+map <C-S-Left> :bp<CR>
+" FZF finder
+map ; :Files<CR>
+" Fuzzy Finder
+nnoremap <silent> <C-p> :Files ~<CR>
+nnoremap <silent> <C-g> :Rg<CR>
+"Conflicting with tmux
+"nnoremap <silent> <C-b> :Buffers<CR>
+let g:fzf_action = {
+  \ 'ctrl-i': 'tab split',
+  \ 'ctrl-x': 'split',
+  \ 'ctrl-v': 'vsplit' }
+" Mapping for GitGutter Plugin
+nnoremap <leader>cf :GitGutterFold<cr>
+" Mapping for git fugitive
+nnoremap <leader>gs :Git status<cr>
+nnoremap <leader>df :Git diff<cr>
+"Page navigation conflict with tmux
+"map <C-b> <C-u>
+"COC Shortcuts 
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Treat long lines as break lines (useful when moving around in them)
+map j gj
+map k gk
+" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
+"map <space> /
+"map <c-space> ?
+
+" Disable highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<cr>
+" Opens a new tab with the current buffer's path
+" Super useful when editing files in the same directory
+"map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+
+" Specify the behavior when switching between buffers 
+" try
+"   set switchbuf=useopen,usetab,newtab
+"   set stal=2
+" catch
+" endtry
+" Return to last edit position when opening files (You want this!)
+autocmd BufReadPost *
+     \ if line("'\"") > 0 && line("'\"") <= line("$") |
+     \   exe "normal! g`\"" |
+     \ endif
+" Remember info about open buffers on close
+"set viminfo^=%
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Editing mappings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Delete trailing white space on save
+func! DeleteTrailingWS()
+  exe "normal mz"
+  %s/\s\+$//ge
+  exe "normal `z"
+endfunc
+autocmd BufWrite *.py :call DeleteTrailingWS()
+autocmd BufWrite *.rb :call DeleteTrailingWS()
+autocmd BufWrite *.go :call DeleteTrailingWS()
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Spell checking
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set spelllang=en
+set spellfile=${HOME}/.vim/dic-en.utf-8.add
+
+" Pressing ,ss will toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+
+" Shortcuts using <leader>
+map <leader>sn ]s
+map <leader>sp [s
+map <leader>sa zg
+map <leader>sc z=
+map <leader>r :%s/
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Misc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" enable Automatic paste and nopaste option in VIM
+let &t_SI .= "\<Esc>[?2004h"
+let &t_EI .= "\<Esc>[?2004l"
+
+inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
+
+function! XTermPasteBegin()
+  set pastetoggle=<Esc>[201~
+  set paste
+  return ""
+endfunction
+" End of Automatic paste and nopaste`
+
+" allow backspace use in all insert mode
+set backspace=indent,eol,start
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Helper functions
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('cscope')
+    set cscopetag cscopeverbose
+
+    " if has('quickfix')
+    "     set cscopequickfix=s-,c-,d-,i-,t-,e-
+    " endif
+
+    cnoreabbrev csa cs add
+    cnoreabbrev csf cs find
+    cnoreabbrev csk cs kill
+    cnoreabbrev csr cs reset
+    cnoreabbrev css cs show
+    cnoreabbrev csh cs help
+
+    " add any cscope database in current directory
+    if filereadable("cscope.out")
+        silent cs add cscope.out 
+    " else add the database pointed to by environment variable 
+    elseif $CSCOPE_DB != ""
+        cs add $CSCOPE_DB
+    endif
+endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin settings
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Plugin Installation 
+if empty(glob('~/.vim/autoload/plug.vim'))
+          silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+              \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+            autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+
+" Specify a directory for plugins
+" " - For Neovim: stdpath('data') . '/plugged'
+" " - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+" Plugin for showing git diff
+Plug 'airblade/vim-gitgutter'
+" Plugin for Git integration
+Plug 'tpope/vim-fugitive'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'itchyny/lightline.vim'
+"Auto Complete Plugin
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/fzf' ", { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+"Plug 'mattn/emmet-vim' "Not sure if it usefull for me 
+Plug 'scrooloose/nerdtree'
+Plug 'tpope/vim-eunuch'
+"Plug 'tpope/vim-surround' "Not sure if it usefull for me 
+"Plug 'w0rp/ale' "conflicting with syntastic
+Plug 'hashivim/vim-terraform'
+Plug 'vim-syntastic/syntastic'
+"Plug 'juliosueiras/vim-terraform-completion' "Makes vim slow
+"Plug 'junegunn/vim-easy-align' "Not sure if it usefull for me 
+Plug 'https://github.com/PProvost/vim-ps1.git'
+"Plug '~/.vim/plugged/YouCompleteMe'
+"Reload .vimrc and :PlugInstall to install plugins.
+" Initialize plugin system
+call plug#end()
+
+" Enable fuzy finder - Not sure
+"set rtp+=~/.fzf
+
+"Coc Config
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Lightline
+let g:lightline = {
+      \ 'colorscheme': 'powerline',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead'
+      \ },
+      \ }
+" Syntastic Config
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_python_checkers = ['pylint']
+
+" (Optional)Remove Info(Preview) window
+set completeopt-=preview
+
+" (Optional)Hide Info(Preview) window after completions
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+"To ensure that this plugin works well with Tim Pope's fugitive, use the following patterns array:
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+" (Optional) Enable terraform plan to be include in filter
+"let g:syntastic_terraform_tffilter_plan = 1
+
+" (Optional) Default: 0, enable(1)/disable(0) plugin's keymapping
+"let g:terraform_completion_keys = 1
+
+" (Optional) Default: 1, enable(1)/disable(0) terraform module registry completion
+"let g:terraform_registry_module_completion = 0
+
+"vim-terraform
+"Allow vim-terraform to automatically fold (hide until unfolded) sections of terraform code. Defaults to 0 which is off.
+"let g:terraform_fold_sections=1
+
+" Allow vim-terraform to automatically format *.tf and *.tfvars files with terraform fmt. You can also do this manually with the :TerraformFmt command.
+let g:terraform_fmt_on_save=1
+
+" Allow vim-terraform to align settings automatically with Tabularize.
+let g:terraform_align=1
+
+" Install coc extention you want coc-python coc-svg coc-yaml coc-xml coc-json
+let g:coc_global_extensions = ['coc-json', 'coc-python', 'coc-svg', 'coc-yaml', 'coc-xml', 'coc-cmake', 'coc-sql', 'coc-sh']

@@ -51,3 +51,14 @@ then
     export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 fi
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/ak/.lmstudio/bin"
+export PATH="$HOME/.local/bin:$PATH"
+
+# Ghostty shell integration for Bash. This should be at the top of your bashrc!
+if [ -n "${GHOSTTY_RESOURCES_DIR}" ]; then
+    builtin source "${GHOSTTY_RESOURCES_DIR}/shell-integration/bash/ghostty.bash"
+fi
+
+export PATH="$HOME/.local/bin:$PATH"
