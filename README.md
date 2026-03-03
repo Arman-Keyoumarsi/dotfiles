@@ -1,41 +1,50 @@
-# dotfiles :computer:
+# dotfiles
 
-Familiar Dev Environment in any Linux server
+Personal dotfiles for a consistent dev environment across macOS and Linux.
 
-## Prerequisite :traffic_light:
-
-```bash
-sudo apt install build-essential
-make ub20
-```
-
-## Install :beginner:
-
-* Enter working directory and run:
+## Quick Start
 
 ```bash
-make all
+git clone https://github.com/Arman-Keyoumarsi/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+./install.sh
 ```
 
-## VIM Plugin Installs
-
-Open vim and run following (Install any Coc extetion you like)
+Or install specific components:
 
 ```bash
-:PlugInstall
-:CocInstall coc-powershell coc-python coc-svg coc-yaml coc-xml coc-json
+./install.sh bash        # Shell configs only
+./install.sh vim         # Vim setup only
+./install.sh git         # Git configs only
+./install.sh tmux        # Tmux + TPM only
+./install.sh packages    # Install packages only
 ```
 
-## Install YCM Manually (No Longer in Use)
-```bash
-apt install build-essential cmake vim python3-dev
+## What Gets Installed
 
-cd ~/.vim/plugged/YouCompleteMe && python3 install.py
+**Packages** (auto-detected by OS):
+- Linux (apt): curl, wget, vim, tmux, ripgrep, tree, fzf, keychain
+- macOS (brew): fzf, fd, ripgrep, tree, tmux
+
+**Configs** (symlinked to `$HOME`):
+- `bash/` - bash_profile, bashrc, aliases
+- `vim/` - vimrc, colors, dictionary
+- `git/` - gitconfig, gitignore, commit template
+- `tmux/` - tmux.conf + TPM plugins
+- `etc/` - custom bash completions
+
+## Post-Install
+
+Open vim and run `:PlugInstall` to install plugins, then `prefix + I` inside tmux to install tmux plugins.
+
+## Structure
+
 ```
-
-That is all you need to make any linux server your own.
-
-> Feel free to fork and modify this repo in any way or shape you want!!
-
-
-:clock1: :white_check_mark:
+bash/           Shell configs (bash_profile, bashrc, alias)
+vim/            Vim config, colorscheme, dictionary
+git/            Git config, global ignore, commit template
+tmux/           Tmux config
+etc/            Custom bash completions
+docker/         Dev container Dockerfile
+archive/        Legacy scripts (reference only)
+```
