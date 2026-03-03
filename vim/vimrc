@@ -32,12 +32,7 @@ set updatetime=300               " Faster input responsiveness
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " PLUGIN COMPATIBILITY
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" For GitGutter, CoC, and other sign-using plugins:
-if has("patch-8.1.1564")
-  set signcolumn=number          " Merge sign and number columns 
-else
-  set signcolumn=yes             " Fallback for older Vim versions
-endif
+set signcolumn=number              " Merge sign and number columns
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " OTHER SETTINGS
@@ -59,9 +54,8 @@ set softtabstop=4    " Number of spaces used when Tab key is pressed
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " WRAPPING AND LINE BREAKS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set textwidth=79     " Maximum line length before wrapping (can be adjusted)
 set lbr              " Enable line breaks at appropriate word boundaries
-set tw=500
+set tw=500           " Maximum line length before wrapping
 set wrap             " Wrap long lines
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -75,26 +69,14 @@ set si               " Smart indent (detects existing indentation)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set background=dark              " Set dark background color scheme
 colorscheme hybrid               " Load the 'hybrid' color scheme
-set term=xterm-256color          " Enable 256-color support (especially for terminals)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " SYNTAX AND BEHAVIOR
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 syntax enable                    " Turn on syntax highlighting
 filetype plugin indent on        " Filetype detection, plugin support, and indentation
-set nocompatible                 " Disable compatibility with older Vim versions
-let python_highlight_all=1       " Highlight all Python elements (may vary by language)
+let python_highlight_all=1       " Highlight all Python elements
 set foldmethod=manual            " Enable manual code folding
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" GUI OPTIONS (Conditional)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has("gui_running")            " Check if Vim is running in GUI mode
-    set guioptions-=T            " Remove the toolbar 
-    set guioptions-=e            " Remove the right-hand scrollbar
-    set t_Co=256                 " Ensure full color support in the GUI
-    set guitablabel=%M\ %t       " Customize tab labels
-endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " ENCODING
@@ -198,16 +180,14 @@ func! DeleteTrailingWS()
   %s/\s\+$//ge
   exe "normal `z"
 endfunc
-autocmd BufWrite *.py :call DeleteTrailingWS()
-autocmd BufWrite *.rb :call DeleteTrailingWS()
-autocmd BufWrite *.go :call DeleteTrailingWS()
+autocmd BufWrite * :call DeleteTrailingWS()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spell checking
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set spelllang=en
-set spellfile=${HOME}/.vim/dic-en.utf-8.add
+set spellfile=~/.vim/dic-en.utf-8.add
 
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
@@ -222,19 +202,6 @@ map <leader>r :%s/
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Misc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" enable Automatic paste and nopaste option in VIM
-let &t_SI .= "\<Esc>[?2004h"
-let &t_EI .= "\<Esc>[?2004l"
-
-inoremap <special> <expr> <Esc>[200~ XTermPasteBegin()
-
-function! XTermPasteBegin()
-  set pastetoggle=<Esc>[201~
-  set paste
-  return ""
-endfunction
-" End of Automatic paste and nopaste`
-
 " allow backspace use in all insert mode
 set backspace=indent,eol,start
 
@@ -262,15 +229,14 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'itchyny/lightline.vim'      " Status line
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }  " Fuzzy finder
 Plug 'junegunn/fzf.vim'
-Plug 'scrooloose/nerdtree'        " File explorer 
-Plug 'vim-syntastic/syntastic'    " Linting 
+Plug 'scrooloose/nerdtree'        " File explorer
+Plug 'dense-analysis/ale'         " Async linting
 
-call plug#end() 
+call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" LIGHTLINE SETTINGS "
+" LIGHTLINE SETTINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Lightline
 let g:lightline = {
       \ 'colorscheme': 'powerline',
       \ 'active': {
@@ -283,14 +249,10 @@ let g:lightline = {
       \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" SYNTACTIC SETTINGS
+" ALE SETTINGS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set statusline+=%#warningmsg#          
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0   
-let g:syntastic_python_checkers = ['pylint']
+let g:ale_sign_error = '>>'
+let g:ale_sign_warning = '--'
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_fix_on_save = 0

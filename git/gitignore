@@ -1,16 +1,37 @@
-.fdignore
- 
-#  Local .terraform directories
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+*.swp
+*.swo
+*.un~
+*~
+.vscode/
+.idea/
+
+# Secrets & credentials
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*private*
+*secret*
+*credential*
+*.keystore
+
+# Terraform
 **/.terraform/*
-# .tfstate files
 *.tfstate
 *.tfstate.*
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 
-# .tfvars files
-#*.tfvars
-
-#Sensetive Info
-*private*
-
-#VIM Junk
-*.un~
+# Misc
+.fdignore
