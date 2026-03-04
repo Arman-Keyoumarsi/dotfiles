@@ -1,0 +1,14 @@
+#!/usr/bin/env zsh
+
+# ~/.zshenv: sourced by ALL zsh instances (login, interactive, scripts).
+# Keep this minimal — only PATH and env vars.
+
+# Cargo
+if [[ -d "$HOME/.cargo/bin" ]]; then
+	export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+# Local bin
+if [[ -d "$HOME/.local/bin" ]]; then
+	export PATH="$HOME/.local/bin:$PATH"
+fi

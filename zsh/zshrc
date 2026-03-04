@@ -1,0 +1,105 @@
+#!/usr/bin/env zsh
+
+# ~/.zshrc: interactive shell config (maps to bashrc)
+
+# Ghostty shell integration (must stay at top)
+if [[ -n "${GHOSTTY_RESOURCES_DIR}" ]]; then
+	source "${GHOSTTY_RESOURCES_DIR}/shell-integration/zsh/ghostty-integration"
+fi
+
+# Interactive guard
+[[ -o interactive ]] || return
+
+# --- Aliases ---
+source "${HOME}/.alias"
+
+# Override sp alias for zsh
+alias sp='source ~/.zprofile && source ~/.zshrc'
+
+# --- History ---
+HISTFILE="${HOME}/.zsh_history"
+HISTSIZE=1000000
+SAVEHIST=1000000
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt SHARE_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_VERIFY
+setopt EXTENDED_HISTORY
+
+# --- Shell options ---
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt CORRECT
+setopt EXTENDED_GLOB
+setopt GLOB_DOTS
+setopt NO_BEEP
+
+# --- Completion ---
+autoload -Uz compinit && compinit
+
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' special-dirs true
+# Partial path expansion: /u/l/b -> /usr/local/bin
+zstyle ':completion:*' list-suffixes true
+zstyle ':completion:*' expand prefix suffix
+
+# --- Key bindings ---
+# Prefix-based history search with up/down arrows
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N up-line-or-beginning-search
+zle -N down-line-or-beginning-search
+bindkey '^[[A' up-line-or-beginning-search
+bindkey '^[[B' down-line-or-beginning-search
+
+# --- Git prompt via vcs_info ---
+autoload -Uz vcs_info
+precmd() { vcs_info }
+setopt PROMPT_SUBST
+
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' stagedstr '+'
+zstyle ':vcs_info:*' unstagedstr '*'
+zstyle ':vcs_info:git:*' formats ' (%b%u%c)'
+zstyle ':vcs_info:git:*' actionformats ' (%b|%a%u%c)'
+
+# --- Prompt ---
+if [[ "$OSTYPE" == darwin* ]]; then
+	PS1='%F{green}%n@%m%f:%F{172}%~%f%F{red}${vcs_info_msg_0_}%f
+$ '
+	export FZF_DEFAULT_COMMAND='fd --type f'
+	export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+else
+	PS1='%F{green}%n@%m%f:%F{blue}%~%f%F{red}${vcs_info_msg_0_}%f%# '
+fi
+
+RPROMPT='%F{8}%*%f'
+
+# --- fzf ---
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+# --- SSH-Agent via keychain (Linux only) ---
+if [[ "$OSTYPE" == linux* ]]; then
+	if command -v keychain &>/dev/null; then
+		keychain -q
+		source "$HOME/.keychain/$HOST-sh"
+	fi
+fi
+
+# --- Bulk rename ---
+autoload -Uz zmv
+
+# --- Plugins (macOS, via Homebrew) ---
+if [[ "$OSTYPE" == darwin* ]]; then
+	if [[ -f /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]]; then
+		source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+	fi
+	if [[ -f /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+		source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+	fi
+fi

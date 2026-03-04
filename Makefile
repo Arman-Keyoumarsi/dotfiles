@@ -1,4 +1,4 @@
-.PHONY: all bash vim git tmux packages
+.PHONY: all bash vim git tmux zsh packages
 DOTFILES := $(shell pwd)
 
 all: packages bash vim git tmux
@@ -26,6 +26,18 @@ git:
 tmux:
 	git clone https://github.com/tmux-plugins/tpm $(HOME)/.tmux/plugins/tpm || true
 	ln -fs $(DOTFILES)/tmux/tmux.conf $(HOME)/.tmux.conf
+
+zsh:
+ifeq ($(shell uname -s),Darwin)
+	ln -fs $(DOTFILES)/zsh/zshenv $(HOME)/.zshenv
+	ln -fs $(DOTFILES)/zsh/zprofile $(HOME)/.zprofile
+	ln -fs $(DOTFILES)/zsh/zshrc $(HOME)/.zshrc
+	ln -fs $(DOTFILES)/bash/alias $(HOME)/.alias
+	ln -fns $(DOTFILES)/etc/ $(HOME)/etc
+	brew install zsh-syntax-highlighting zsh-autosuggestions 2>/dev/null || true
+else
+	@echo "zsh target is macOS-only"
+endif
 
 packages:
 ifeq ($(shell uname -s),Linux)
