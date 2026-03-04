@@ -1,33 +1,59 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-. ${HOME}/.bashrc
+source "${HOME}/.bashrc"
+source "${HOME}/.alias"
 
-source ${HOME}/.alias
-
-if [ -d "$HOME/etc/bash_completion.d" ] ; then
-	. $HOME/etc/bash_completion.d/*.bash
+# System bash completion (Linux)
+if [ -f /etc/bash_completion ]; then
+	source /etc/bash_completion
 fi
 
-if [ -f /etc/bash_completion ] ; then
-	. /etc/bash_completion
+# Cargo
+if [ -d "$HOME/.cargo/bin" ]; then
+	export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
-export PATH="$HOME/.cargo/bin:$PATH"
+# Local bin
+export PATH="$HOME/.local/bin:$PATH"
 
-if [[ "$OSTYPE" == "darwin"* ]]
-then
+if [[ "$OSTYPE" == "darwin"* ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
     export BASH_SILENCE_DEPRECATION_WARNING=1
-    export TERM=xterm-256color
+    export CLICOLOR=1
+    export LSCOLORS=GxFxCxDxBxegedabagaced
+
+    # Homebrew bash-completion
+    if [ -r "/opt/homebrew/etc/profile.d/bash_completion.sh" ]; then
+        source "/opt/homebrew/etc/profile.d/bash_completion.sh"
+    fi
+
+    # Python (Homebrew) - auto-detect latest version
+    _brew_python=$(ls -d /opt/homebrew/opt/python@3.*/libexec/bin 2>/dev/null | sort -V | tail -1)
+    if [ -n "$_brew_python" ]; then
+        export PATH="$_brew_python:$PATH"
+        _pyver=$(basename "$(dirname "$(dirname "$_brew_python")")" | sed 's/python@//')
+        export CLOUDSDK_PYTHON="/opt/homebrew/bin/python${_pyver}"
+        unset _pyver
+    fi
+    unset _brew_python
+
+    # Google Cloud SDK
+    if [ -f "$HOME/Downloads/google-cloud-sdk/path.bash.inc" ]; then
+        source "$HOME/Downloads/google-cloud-sdk/path.bash.inc"
+    fi
+    if [ -f "$HOME/Downloads/google-cloud-sdk/completion.bash.inc" ]; then
+        source "$HOME/Downloads/google-cloud-sdk/completion.bash.inc"
+    fi
+
+    # LM Studio CLI
+    if [ -d "$HOME/.lmstudio/bin" ]; then
+        export PATH="$PATH:$HOME/.lmstudio/bin"
+    fi
 fi
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:/Users/ak/.lmstudio/bin"
-export PATH="/opt/homebrew/opt/python@3.12/libexec/bin:$PATH"
-export CLOUDSDK_PYTHON="/opt/homebrew/bin/python3.12"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/ak/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/Users/ak/Downloads/google-cloud-sdk/path.bash.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/ak/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/ak/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+# Custom completions (loaded last to override system defaults)
+if [ -d "$HOME/etc/bash_completion.d" ]; then
+	for f in "$HOME/etc/bash_completion.d"/*.bash; do
+		[ -f "$f" ] && source "$f"
+	done
+fi
