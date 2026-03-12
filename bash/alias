@@ -86,6 +86,7 @@ alias t=terraform
 alias lt='tree -L 1 -C'
 alias tfl='tail -Fn30 log/*.log'
 # Wrap ssh to reset mouse tracking on exit (prevents garbled input in Ghostty after tmux/vim)
+unalias ssh 2>/dev/null
 ssh() {
     TERM=xterm-256color command ssh "$@"
     printf '\e[?1000l\e[?1002l\e[?1003l\e[?1006l'
