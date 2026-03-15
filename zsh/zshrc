@@ -103,3 +103,6 @@ if [[ "$OSTYPE" == darwin* ]]; then
 		source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 	fi
 fi
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+

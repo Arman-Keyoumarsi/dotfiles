@@ -42,7 +42,9 @@ endif
 packages:
 ifeq ($(shell uname -s),Linux)
 	sudo apt-get update
-	sudo apt-get install -y curl wget vim tmux ripgrep tree fzf keychain
+	sudo apt-get install -y curl wget vim tmux ripgrep tree keychain
+	git clone --depth 1 https://github.com/junegunn/fzf.git $(HOME)/.fzf || true
+	$(HOME)/.fzf/install --all --no-update-rc
 endif
 ifeq ($(shell uname -s),Darwin)
 	brew install fzf fd ripgrep tree tmux
