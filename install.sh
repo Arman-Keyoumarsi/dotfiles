@@ -32,12 +32,12 @@ else
                 check_brew
                 make -C "$DOTFILES" packages
                 ;;
-            bash|vim|git|tmux)
+            bash|vim|git|tmux|zsh)
                 make -C "$DOTFILES" "$target"
                 ;;
             *)
                 echo "Unknown target: $target"
-                echo "Usage: $0 [bash|vim|git|tmux|packages]"
+                echo "Usage: $0 [bash|vim|git|tmux|zsh|packages]"
                 exit 1
                 ;;
         esac

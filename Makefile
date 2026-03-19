@@ -1,4 +1,4 @@
-.PHONY: all bash vim git tmux packages
+.PHONY: all bash vim git tmux zsh packages
 DOTFILES := $(shell pwd)
 
 all: packages bash vim git tmux
@@ -27,10 +27,24 @@ tmux:
 	git clone https://github.com/tmux-plugins/tpm $(HOME)/.tmux/plugins/tpm || true
 	ln -fs $(DOTFILES)/tmux/tmux.conf $(HOME)/.tmux.conf
 
+zsh:
+ifeq ($(shell uname -s),Darwin)
+	ln -fs $(DOTFILES)/zsh/zshenv $(HOME)/.zshenv
+	ln -fs $(DOTFILES)/zsh/zprofile $(HOME)/.zprofile
+	ln -fs $(DOTFILES)/zsh/zshrc $(HOME)/.zshrc
+	ln -fs $(DOTFILES)/bash/alias $(HOME)/.alias
+	ln -fns $(DOTFILES)/etc/ $(HOME)/etc
+	brew install zsh-syntax-highlighting zsh-autosuggestions 2>/dev/null || true
+else
+	@echo "zsh target is macOS-only"
+endif
+
 packages:
 ifeq ($(shell uname -s),Linux)
 	sudo apt-get update
-	sudo apt-get install -y curl wget vim tmux ripgrep tree fzf keychain
+	sudo apt-get install -y curl wget vim tmux ripgrep tree keychain
+	git clone --depth 1 https://github.com/junegunn/fzf.git $(HOME)/.fzf || true
+	$(HOME)/.fzf/install --all --no-update-rc
 endif
 ifeq ($(shell uname -s),Darwin)
 	brew install fzf fd ripgrep tree tmux
