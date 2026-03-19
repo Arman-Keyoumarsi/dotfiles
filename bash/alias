@@ -83,6 +83,7 @@ alias k='kubectl'
 # --- Tools ---
 
 alias t=terraform
+alias yolo='claude --dangerously-skip-permissions'
 alias lt='tree -L 1 -C'
 alias tfl='tail -Fn30 log/*.log'
 # Wrap ssh to reset mouse tracking on exit (prevents garbled input in Ghostty after tmux/vim)
