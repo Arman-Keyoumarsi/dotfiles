@@ -8,7 +8,7 @@ if [[ "$OSTYPE" == darwin* ]]; then
 	export LSCOLORS=GxFxCxDxBxegedabagaced
 
 	# Python (Homebrew) - auto-detect latest version
-	_brew_python=("${(@On)$(ls -d /opt/homebrew/opt/python@3.*/libexec/bin 2>/dev/null)}")
+	_brew_python=(/opt/homebrew/opt/python@3.*/libexec/bin(NOn))
 	if (( ${#_brew_python} )); then
 		export PATH="${_brew_python[1]}:$PATH"
 		_pyver=${${_brew_python[1]:h:h:t}#python@}
