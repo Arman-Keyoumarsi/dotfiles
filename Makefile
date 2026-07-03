@@ -26,6 +26,7 @@ git:
 tmux:
 	git clone https://github.com/tmux-plugins/tpm $(HOME)/.tmux/plugins/tpm || true
 	ln -fs $(DOTFILES)/tmux/tmux.conf $(HOME)/.tmux.conf
+	ln -fs $(DOTFILES)/tmux/tmux-select.sh $(HOME)/tmux-select.sh
 
 zsh:
 ifeq ($(shell uname -s),Darwin)
@@ -47,5 +48,5 @@ ifeq ($(shell uname -s),Linux)
 	$(HOME)/.fzf/install --all --no-update-rc
 endif
 ifeq ($(shell uname -s),Darwin)
-	brew install fzf fd ripgrep tree tmux
+	brew install fzf fd ripgrep tree tmux python
 endif
